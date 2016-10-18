@@ -15,6 +15,8 @@ unsigned objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros...
 // ---------------------------------------------------------------------
 // declaraciones de estructuras de datos....
 
+// ---------------------------------------------------------------------
+// declaraciones del cubo y el tetraedro
 
 
 // ---------------------------------------------------------------------
