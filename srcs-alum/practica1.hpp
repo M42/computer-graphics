@@ -22,5 +22,6 @@ public:
 class Tetraedro : public MallaInd {
 public:
   Tetraedro();
-}
+};
+
 #endif
