@@ -7,5 +7,3 @@
 std::string Objeto3D::nombre() {
     return nombre_objeto;
 }
-
-
