@@ -3,6 +3,7 @@
 
 #include "Objeto3D.hpp"
 #include "tuplasg.hpp"
+#include "aux.hpp"
 #include <vector>
 
 // Una malla es un objeto 3D, por lo que hereda de él y
