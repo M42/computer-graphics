@@ -11,7 +11,7 @@
 
 // ---------------------------------------------------------------------
 // declaraciones de estructuras de datos....
-unsigned objeto_activo1 = 0; // objeto activo: cubo (0), tetraedro (1), otros....
+unsigned int objeto_activo1 = 0; // objeto activo: cubo (0), tetraedro (1), otros....
 std::vector<MallaInd> objetos1;
 
 // ---------------------------------------------------------------------
@@ -22,7 +22,7 @@ Cubo::Cubo() {
 
   // Añade los vértices al cubo
   for (int i=0; i<8; i++)
-    vertices.push_back(Tupla3i(i/4,(i/2)%2,i%2));
+    vertices.push_back(Tupla3f(i/4,(i/2)%2,i%2));
 
   // Añade las caras del cubo
   // x = 0
@@ -51,10 +51,10 @@ Tetraedro::Tetraedro() {
 
   // Añade los vértices del tetraedro
   // Es un tetraedro inscrito en un cubo con lado 2*sqrt(2)
-  vertices.push_back(Tupla3i(+1,+1,+1));
-  vertices.push_back(Tupla3i(-1,-1,+1));
-  vertices.push_back(Tupla3i(-1,+1,-1));
-  vertices.push_back(Tupla3i(+1,-1,-1));
+  vertices.push_back(Tupla3f(+1,+1,+1));
+  vertices.push_back(Tupla3f(-1,-1,+1));
+  vertices.push_back(Tupla3f(-1,+1,-1));
+  vertices.push_back(Tupla3f(+1,-1,-1));
 
   // Caras del tetraedro
   caras.push_back(Tupla3i(0,1,2));

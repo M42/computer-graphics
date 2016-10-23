@@ -12,7 +12,7 @@ class MallaInd : public Objeto3D {
 protected:
   // Los objetos derivados de una malla 3D deberían poder modificar
   // los vértices y las caras de la malla.
-  std::vector<Tupla3i> vertices;
+  std::vector<Tupla3f> vertices;
   std::vector<Tupla3i> caras;
 
 public:

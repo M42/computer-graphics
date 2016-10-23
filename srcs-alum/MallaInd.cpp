@@ -2,13 +2,15 @@
 #include <vector>
 
 void MallaInd::visualizar(ContextoVis& cv) {
+  // Implementa los modos distintos del modo ajedrez,
+  // que son similares en implementación.
   if (cv.modoVisu == modoPuntos or
       cv.modoVisu == modoAlambre or
       cv.modoVisu == modoSolido) {
     // Prepara el array de vértices e indica sobre él la
     // posición inicial y el sentido que llevará.
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_INT, 0, vertices[0]);
+    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
 
     // Escoge el modo de visualización dentro de los tres modos posibles
     // desde este punto. La variable se usará en "glPolygonMode".
@@ -37,7 +39,7 @@ void MallaInd::visualizar(ContextoVis& cv) {
     // posición inicial y el sentido que llevará.
     // Señala además la forma de dibujarlo.
     glEnableClientState(GL_VERTEX_ARRAY);
-    glVertexPointer(3, GL_INT, 0, vertices[0]);
+    glVertexPointer(3, GL_FLOAT, 0, vertices[0]);
     glPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
 
     // Separa en caras pares e impares

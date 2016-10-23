@@ -21,6 +21,7 @@
 // includes de archivos en el directorio de trabajo (de las prácticas)
 #include "practicas.hpp"
 #include "practica1.hpp"
+#include "practica2.hpp"
 
 // evita la necesidad de escribir std::
 using namespace std ;
@@ -31,6 +32,9 @@ using namespace std ;
 // ** (se inicializan en las funciones de inicialización)
 // **
 // *********************************************************************
+
+// Número de prácticas
+const unsigned NPRACTICAS = 2;
 
 // variables que definen la posicion de la camara en coordenadas polares
 
@@ -170,16 +174,12 @@ void LimpiarVentana() {
 // dibuja los objetos de la escena
 
 void DibujarObjetos() {
-   switch(practicaActual)
-   {
-      case 1 :
-         P1_DibujarObjetos(contextoVis); // definido en 'practica1.hpp'
-         break ;
-      // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
-      //
-      default :
-         cout << "El valor de 'practicaActual' (" << practicaActual  << ") es incorrecto" << endl ;
-         break ;
+   switch(practicaActual) {
+   case 1: P1_DibujarObjetos(contextoVis); break;
+   case 2: P2_DibujarObjetos(contextoVis); break;
+   default:
+     cout << "El valor de 'practicaActual' (" << practicaActual  << ") es incorrecto" << endl ;
+     break;
    }
 }
 
@@ -240,6 +240,12 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
      modoVis%=numModosVisu;
      contextoVis.modoVisu = (ModosVisu) modoVis;
      break;
+   case 'p':
+   case 'P':
+     // Cambia a la siguiente práctica
+     practicaActual%=NPRACTICAS;
+     practicaActual++;
+     break;
    case 'Q':
    case 27:
      exit(0);
@@ -254,9 +260,11 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
      redibujar = false;
      switch(practicaActual) {
      case 1 :
-       redibujar = P1_FGE_PulsarTeclaNormal(tecla); // true si es necesario redibujar
+       redibujar = P1_FGE_PulsarTeclaNormal(tecla);
        break;
-       // falta: case 2, case 3, etc....
+     case 2:
+       redibujar = P2_FGE_PulsarTeclaNormal(tecla);
+       break;
      default :
        redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
      }
@@ -434,8 +442,9 @@ void Inicializar( int argc, char *argv[] )
    // opengl: define proyección y atributos iniciales
    Inicializa_OpenGL() ;
 
-   // inicializar práctica 1.
-   P1_Inicializar( argc, argv ) ;
+   // inicializar prácticas
+   P1_Inicializar(argc, argv);
+   P2_Inicializar(argc, argv);
 }
 
 // *********************************************************************
