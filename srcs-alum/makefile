@@ -15,14 +15,14 @@
 ## unidades a enlazar y nombre del binario ejecutable
 
 target_name	:= prac
-units_loc   := main practica1 
+units_loc   := main practica1 MallaInd Objeto3D
 ### nota: añadir a 'units_loc' los módulos practica2 practica3, etc.....
 
 units       := jpg_memsrc jpg_readwrite\
                shaders matrices-tr\
                file_ply_stl\
                aux
-               
+
 ## ---------------------------------------------------------------------
 ## aspectos configurables
 

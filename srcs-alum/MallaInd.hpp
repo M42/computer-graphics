@@ -1,17 +1,23 @@
-#ifndef MALLAIND
-#define MALLAIND
+#ifndef MALLAIND_H
+#define MALLAIND_H
 
 #include "Objeto3D.hpp"
 #include "tuplasg.hpp"
 #include <vector>
 
-// Mallas indexadas
+// Una malla es un objeto 3D, por lo que hereda de él y
+// consta de un método "visualizar" que la dibuja.
 class MallaInd : public Objeto3D {
 protected:
-  std::vector<Tupla3d> vertices;
+  // Los objetos derivados de una malla 3D deberían poder modificar
+  // los vértices y las caras de la malla.
+  std::vector<Tupla3i> vertices;
+  std::vector<Tupla3i> caras;
+
 public:
-  // Visualización de la malla
-  virtual void visualizarGL(ContextoVis& cv);
+  // Función de visualización de la malla, implementando el método
+  // abstracto de un objeto3D.
+  void visualizar(ContextoVis& cv) override;
 };
 
 #endif

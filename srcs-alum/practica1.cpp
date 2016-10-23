@@ -5,15 +5,14 @@
 // **
 // *********************************************************************
 
-#include "aux.hpp"
-#include "tuplasg.hpp"   // Tupla3f
 #include "practicas.hpp"
 #include "practica1.hpp"
-
-unsigned objeto_activo = 0 ; // objeto activo: cubo (0), tetraedro (1), otros....
+#include <vector>
 
 // ---------------------------------------------------------------------
 // declaraciones de estructuras de datos....
+unsigned objeto_activo1 = 0; // objeto activo: cubo (0), tetraedro (1), otros....
+std::vector<MallaInd> objetos1;
 
 // ---------------------------------------------------------------------
 // declaraciones del cubo y el tetraedro
@@ -22,15 +21,8 @@ Cubo::Cubo() {
   nombre_objeto = "Cubo creado";
 
   // Añade los vértices al cubo
-  // TODO: Reescribir en binario
-  vertices.push_back(Tupla3i(0,0,0));
-  vertices.push_back(Tupla3i(0,0,1));
-  vertices.push_back(Tupla3i(0,1,0));
-  vertices.push_back(Tupla3i(0,1,1));
-  vertices.push_back(Tupla3i(1,0,0));
-  vertices.push_back(Tupla3i(1,0,1));
-  vertices.push_back(Tupla3i(1,1,0));
-  vertices.push_back(Tupla3i(1,1,1));
+  for (int i=0; i<8; i++)
+    vertices.push_back(Tupla3i(i/4,(i/2)%2,i%2));
 
   // Añade las caras del cubo
   // x = 0
@@ -75,11 +67,10 @@ Tetraedro::Tetraedro() {
 // Función para implementar en la práctica 1 para inicialización.
 // Se llama una vez al inicio, cuando ya se ha creado la ventana e
 // incializado OpenGL.
-
-void P1_Inicializar( int argc, char *argv[] )
-{
-
-
+void P1_Inicializar(int argc, char *argv[]) {
+  // Crea los objetos
+  objetos1.push_back(Cubo());
+  objetos1.push_back(Tetraedro());
 }
 
 // ---------------------------------------------------------------------
@@ -91,11 +82,16 @@ void P1_Inicializar( int argc, char *argv[] )
 //    'objeto_activo').
 //  - devuelve 'false' si la tecla no se usa en esta práctica (no ha
 //    cambiado nada)
+bool P1_FGE_PulsarTeclaNormal(unsigned char tecla) {
+  // Teclas o/O para cambiar objeto.
+  if (tecla == 'o' or tecla == 'O') {
+    objeto_activo1++;
+    objeto_activo1 %= objetos1.size();
+    return true;
+  }
 
-bool P1_FGE_PulsarTeclaNormal( unsigned char tecla )
-{
-   // ........
-   return false ;
+  // Devuelve false si la tecla no se usa.
+  return false;
 }
 
 
@@ -103,9 +99,6 @@ bool P1_FGE_PulsarTeclaNormal( unsigned char tecla )
 // Función a implementar en la práctica 1  para dibujar los objetos
 // se debe de usar el modo de dibujo que hay en el parámetro 'cv'
 // (se accede con 'cv.modoVisu')
-
-void P1_DibujarObjetos( ContextoVis & cv )
-{
-
-
+void P1_DibujarObjetos(ContextoVis& cv) {
+  objetos1[objeto_activo1].visualizar(cv);
 }
