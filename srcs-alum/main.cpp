@@ -60,10 +60,11 @@ int
 // ---------------------------------------------------------------------
 
 ContextoVis
-   contextoVis ; // contexto de visualización actual (modo de visualización)
+   contextoVis; // contexto de visualización actual (modo de visualización)
 
 unsigned
-   practicaActual ;  // practica actual (cambiable por teclado) (1,2,3,4,5)
+   practicaActual,  // practica actual (cambiable por teclado) (1,2,3,4,5)
+   modoVis;
 
 // *********************************************************************
 // **
@@ -74,8 +75,7 @@ unsigned
 
 // fija la transformación de proyeccion (zona visible del mundo == frustum)
 
-void FijarProyeccion()
-{
+void FijarProyeccion() {
    const GLfloat ratioYX = GLfloat( ventana_tam_y )/GLfloat( ventana_tam_x );
 
    CError();
@@ -108,8 +108,7 @@ void FijarProyeccion()
 // ---------------------------------------------------------------------
 // fijar viewport y proyección (viewport ocupa toda la ventana)
 
-void FijarViewportProyeccion()
-{
+void FijarViewportProyeccion() {
    glViewport( 0, 0, ventana_tam_x, ventana_tam_y );
    FijarProyeccion() ;
 }
@@ -117,9 +116,7 @@ void FijarViewportProyeccion()
 // ---------------------------------------------------------------------
 // fija la transformación de vista (posiciona la camara)
 
-void FijarCamara()
-{
-
+void FijarCamara() {
    CError();
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
@@ -133,8 +130,7 @@ void FijarCamara()
 // ---------------------------------------------------------------------
 // dibuja los ejes utilizando la primitiva grafica de lineas
 
-void DibujarEjes()
-{
+void DibujarEjes() {
    const float long_ejes = 30.0 ;
 
    // establecer modo de dibujo a lineas (podría estar en puntos)
@@ -166,20 +162,18 @@ void DibujarEjes()
 // ---------------------------------------------------------------------
 // asigna el color de fondo actual a todos los pixels de la ventana
 
-void LimpiarVentana()
-{
+void LimpiarVentana() {
    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 }
 
 // ---------------------------------------------------------------------
 // dibuja los objetos de la escena
 
-void DibujarObjetos()
-{
-   switch( practicaActual )
+void DibujarObjetos() {
+   switch(practicaActual)
    {
       case 1 :
-         P1_DibujarObjetos( contextoVis  ) ; // definido en 'practica1.hpp'
+         P1_DibujarObjetos(contextoVis); // definido en 'practica1.hpp'
          break ;
       // falta: case 2: ... case 3: ..... case 4: ..... case 5: .....
       //
@@ -201,7 +195,7 @@ void DibujarObjetos()
 
 void FGE_Redibujado()
 {
-   using namespace std ;
+   using namespace std;
    //cout << "redibujado......" << endl << flush ;
    FijarViewportProyeccion() ; // necesario pues la escala puede cambiar
    FijarCamara();
@@ -237,30 +231,36 @@ void FGE_CambioTamano( int nuevoAncho, int nuevoAlto )
 void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
 {
    bool redibujar = true ; // true si al acabar de procesar el evento resulta que es necesario redibujar
-   switch (toupper(tecla))
-   {
-      case 'Q' :
-      case 27  :
-         exit( 0 );
-         break ;
-      case '+' :
-         frustum_factor_escala *= 1.05;
-         break;
-      case '-' :
-         frustum_factor_escala /= 1.05;
-         break;
-      default:
-         redibujar = false ;
-         switch( practicaActual )
-         {
-            case 1 :
-               redibujar = P1_FGE_PulsarTeclaNormal( tecla ) ; // true si es necesario redibujar
-               break ;
-            // falta: case 2, case 3, etc....
-            default :
-               redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
-         }
-         break ;
+   switch (toupper(tecla)) {
+   case 'M':
+   case 'm':
+     // Cambia al siguiente modo de visualización y
+     // lo guarda en el contexto de visualización actual.
+     modoVis++;
+     modoVis%=numModosVisu;
+     contextoVis.modoVisu = (ModosVisu) modoVis;
+     break;
+   case 'Q':
+   case 27:
+     exit(0);
+     break;
+   case '+' :
+     frustum_factor_escala *= 1.05;
+     break;
+   case '-' :
+     frustum_factor_escala /= 1.05;
+     break;
+   default:
+     redibujar = false;
+     switch(practicaActual) {
+     case 1 :
+       redibujar = P1_FGE_PulsarTeclaNormal(tecla); // true si es necesario redibujar
+       break;
+       // falta: case 2, case 3, etc....
+     default :
+       redibujar = false ; // la tecla no es de la práctica activa (no es necesario redibujar)
+     }
+     break;
    }
    using namespace std ;
    //cout << "tecla normal....." << frustum_factor_escala << endl ;
@@ -278,8 +278,7 @@ void FGE_PulsarTeclaNormal( unsigned char tecla, int x_raton, int y_raton )
 //       x_raton, y_raton : posición del ratón al pulsar
 
 
-void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
-{
+void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton ) {
    bool redisp = true ;
    const float da = 5.0 ; // incremento en grados de ángulos de camara
 
@@ -322,9 +321,7 @@ void FGE_PulsarTeclaEspecial( int tecla, int x_raton, int y_raton )
 
 // inicialización de GLUT: creación de la ventana, designar FGEs
 
-void Inicializa_GLUT( int argc, char * argv[] )
-{
-
+void Inicializa_GLUT( int argc, char * argv[] ) {
    // inicializa variables globales usadas en esta función (y otras)
    ventana_pos_x  = 50 ;
    ventana_pos_y  = 50  ;
@@ -362,8 +359,7 @@ void Inicializa_GLUT( int argc, char * argv[] )
 // ---------------------------------------------------------------------
 // Inicialización de las variables globales del programa
 
-void Inicializa_Vars( )
-{
+void Inicializa_Vars() {
    // inicializar parámetros del frustum
    frustum_dis_del         = 0.1 ;
    frustum_dis_tra         = 10.0;
@@ -449,8 +445,7 @@ void Inicializar( int argc, char *argv[] )
 // *********************************************************************
 
 
-int main( int argc, char *argv[] )
-{
+int main( int argc, char *argv[] ) {
    // incializar el programa
    Inicializar( argc, argv ) ;
 
