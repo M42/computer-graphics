@@ -35,13 +35,13 @@ void P2_Inicializar(int argc, char* argv[]) {
   else {
     archivo_ply = "../plys/ant.ply";
     archivo_revol = "../plys/peon.ply";
-    nperfiles = 30;
+    nperfiles = 20;
   }
 
   // Genera los objetos como mallas leyendo del archivo
   // PLY que se ha obtenido anteriormente
   oply = new MallaPLY(archivo_ply);
-  revol = new MallaRevol(archivo_revol, nperfiles, false, true);
+  revol = new MallaRevol(archivo_revol, nperfiles, true, true);
 }
 
 // Redibuja los objetos de la práctica 2.

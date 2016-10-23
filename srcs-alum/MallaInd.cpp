@@ -53,5 +53,8 @@ void MallaInd::visualizar(ContextoVis& cv) {
     glDrawElements(GL_TRIANGLES, caras_pares.size()*3, GL_UNSIGNED_INT, caras_pares[0]);
     glColor3f(0.8, 0.8, 0.8);
     glDrawElements(GL_TRIANGLES, caras_impares.size()*3, GL_UNSIGNED_INT, caras_impares[0]);
+
+    // Deja de usar el array de vértices.
+    glDisableClientState(GL_VERTEX_ARRAY);
   }
 }
