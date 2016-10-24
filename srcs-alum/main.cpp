@@ -379,7 +379,7 @@ void Inicializa_Vars() {
    camara_angulo_y = 0.0 ;
 
    // inicializar práctica actual
-   practicaActual = 1 ;
+   practicaActual = 2;
 }
 
 // ---------------------------------------------------------------------
